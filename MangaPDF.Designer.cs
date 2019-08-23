@@ -127,7 +127,7 @@
             this.downloadBtn.TabIndex = 13;
             this.downloadBtn.Text = "Download Chapters";
             this.downloadBtn.UseVisualStyleBackColor = true;
-            this.downloadBtn.Click += new System.EventHandler(this.DownloadBtn_Click);
+            this.downloadBtn.Click += new System.EventHandler(this.DownloadBtn_ClickAsync);
             // 
             // MangaPDF
             // 

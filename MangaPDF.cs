@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -19,12 +20,15 @@ namespace MangaPDF
         List<Manga> mangas;
         List<string> chapterLinks;
 
+        List<string> imageSources;
+        private string directory;
+        private int numberOfImages;
+
         private void MangaPDF_Load(object sender, EventArgs e)
         {
             chapterLinks = new List<string>();
 
             chapterList.CheckOnClick = true;
-            
 
             mangaListView.View = View.Details;
             mangaListView.Columns.Add("Manga", 150);
@@ -116,11 +120,40 @@ namespace MangaPDF
             }
         }
 
-        private void DownloadBtn_Click(object sender, EventArgs e)
+        //TODO implement download chapters and PDF generation
+        private async void DownloadBtn_ClickAsync(object sender, EventArgs e)
         {
+            imageSources = new List<string>();
 
+            //Create directory for images
+            directory = @"C:\Temp\" + pdfNameInput.Text;
+
+            if (Directory.Exists(directory)) await Task.Run(() => Directory.Delete(directory, true));
+
+            Directory.CreateDirectory(directory);
+
+            for (int i = 0; i < chapterLinks.Count; i++)
+            {
+                if (chapterList.GetItemCheckState(i) != CheckState.Checked) continue;
+
+                await getImageSources(chapterLinks[i]);
+
+                numberOfImages = i;
+            }
+
+            //Download all images from sources
+            //await Task.Run(() => downloadSourcesToTempAsync());
         }
 
-        //TODO implement download chapters and PDF generation
+        private async Task getImageSources(string url)
+        {
+            imageSources = await mangaSearch.getImageSources(url);
+        }
+
+        private void downloadSourcesToTempAsync()
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

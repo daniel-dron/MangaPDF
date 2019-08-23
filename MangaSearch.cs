@@ -87,7 +87,6 @@ namespace MangaPDF
             foreach (var img in imgs)
             {
                 sources.Add(img.GetAttributeValue("src", ""));
-                Console.WriteLine(img.GetAttributeValue("src", ""));
             }
 
             return sources;
