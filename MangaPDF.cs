@@ -136,18 +136,13 @@ namespace MangaPDF
             {
                 if (chapterList.GetItemCheckState(i) != CheckState.Checked) continue;
 
-                await getImageSources(chapterLinks[i]);
+                imageSources = await mangaSearch.getImageSources(chapterLinks[i]);
 
                 numberOfImages = i;
             }
 
             //Download all images from sources
             //await Task.Run(() => downloadSourcesToTempAsync());
-        }
-
-        private async Task getImageSources(string url)
-        {
-            imageSources = await mangaSearch.getImageSources(url);
         }
 
         private void downloadSourcesToTempAsync()
