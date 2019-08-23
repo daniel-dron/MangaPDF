@@ -141,8 +141,6 @@ namespace MangaPDF
             //Create directory for images
             imageDirectory = directory + "\\" + pdfNameInput.Text;
 
-            MessageBox.Show(imageDirectory, "imageDir", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
             if (Directory.Exists(imageDirectory)) await Task.Run(() => Directory.Delete(imageDirectory, true));
 
             Directory.CreateDirectory(imageDirectory);
