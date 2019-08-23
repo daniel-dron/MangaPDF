@@ -156,7 +156,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 661);
+            this.ClientSize = new System.Drawing.Size(984, 661);
             this.Controls.Add(this.directoryLabel);
             this.Controls.Add(this.changeFolderBtn);
             this.Controls.Add(this.button3);
@@ -170,7 +170,7 @@
             this.Controls.Add(this.mangaSearchTerm);
             this.Controls.Add(this.searchMangaLabel);
             this.Name = "MangaPDF";
-            this.Text = "Form1";
+            this.Text = "MangaPDF | Herooyyy";
             this.Load += new System.EventHandler(this.MangaPDF_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

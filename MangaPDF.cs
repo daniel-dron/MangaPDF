@@ -30,6 +30,9 @@ namespace MangaPDF
 
         private void MangaPDF_Load(object sender, EventArgs e)
         {
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+
             chapterLinks = new List<string>();
 
             chapterList.CheckOnClick = true;
@@ -68,7 +71,6 @@ namespace MangaPDF
                 ImageSize = new Size(90, 130)
             };
 
-            //TODO implement image loader
             foreach (Manga manga in mangas)
             {
                 var request = WebRequest.Create(manga.mangaImageSrc);
@@ -126,7 +128,6 @@ namespace MangaPDF
             }
         }
 
-        //TODO implement download chapters and PDF generation
         private async void DownloadBtn_ClickAsync(object sender, EventArgs e)
         {
             if(directoryChanged)
