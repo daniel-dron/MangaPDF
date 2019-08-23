@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MangaPDF", "MangaPDF.csproj", "{C28EEB23-4DF1-42FB-89AF-417E4F1663E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C28EEB23-4DF1-42FB-89AF-417E4F1663E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C28EEB23-4DF1-42FB-89AF-417E4F1663E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C28EEB23-4DF1-42FB-89AF-417E4F1663E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C28EEB23-4DF1-42FB-89AF-417E4F1663E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE16A55F-FE05-41D6-B815-57475F7DF4A1}
+	EndGlobalSection
+EndGlobal
