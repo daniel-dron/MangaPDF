@@ -173,7 +173,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Manga.cs" />
     <Compile Include="MangaPDF.cs">
       <SubType>Form</SubType>
