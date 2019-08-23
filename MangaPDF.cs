@@ -130,7 +130,7 @@ namespace MangaPDF
 
         private async void DownloadBtn_ClickAsync(object sender, EventArgs e)
         {
-            if(directoryChanged)
+            if(!directoryChanged)
             {
                 MessageBox.Show("Select a destination", "Directory Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -225,7 +225,8 @@ namespace MangaPDF
 
         private void changeFolderBtnClick(object sender, EventArgs e)
         {
-            if(folderBrowserDialog1.ShowDialog() == DialogResult.OK) directoryChanged = true;
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK) directoryChanged = true;
+
             directory = folderBrowserDialog1.SelectedPath;
             directoryLabel.Text = directory + "\\" + (pdfNameInput.Text == "" ? "CHOOSE A NAME" : pdfNameInput.Text + ".pdf");
         }
