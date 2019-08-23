@@ -1,4 +1,6 @@
-﻿using System;
+﻿using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -34,7 +36,7 @@ namespace MangaPDF
             mangaListView.Columns.Add("Manga", 150);
             mangaListView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.HeaderSize);
             mangaListView.MultiSelect = false;
-            mangaListView.Font = new Font("Arial", 14, FontStyle.Bold);
+            mangaListView.Font = new System.Drawing.Font("Arial", 14, FontStyle.Bold);
         }
 
         private async void SearchButton_ClickAsync(object sender, EventArgs e)
@@ -70,7 +72,7 @@ namespace MangaPDF
                 using (var response = request.GetResponse())
                 using (var stream = response.GetResponseStream())
                 {
-                    imgs.Images.Add(Image.FromStream(stream));
+                    imgs.Images.Add(System.Drawing.Image.FromStream(stream));
                 }
             }
 
@@ -142,12 +144,70 @@ namespace MangaPDF
             }
 
             //Download all images from sources
-            //await Task.Run(() => downloadSourcesToTempAsync());
+            await Task.Run(() => downloadSourcesToTempAsync());
         }
 
-        private void downloadSourcesToTempAsync()
+        private async void downloadSourcesToTempAsync()
         {
-            throw new NotImplementedException();
+            if (Directory.Exists(directory)) await Task.Run(() => Directory.Delete(directory, true));
+
+            Directory.CreateDirectory(directory);
+
+            //index for naming file for ordering
+            int i = 0;
+            foreach (String source in imageSources)
+            {
+                if (source.StartsWith("Chapter")) continue;
+
+                String path = directory + "\\" + (i++) + ".jpg";
+                long length;
+                //download image until length != 0
+                //this solves some bugs when it downloads an empty/corrupted image
+                do length = await Task.Run(() => downloadImageAsync(source, path));
+                while (length == 0);
+            }
+
+            numberOfImages = i;
+
+            //Generate PDF file from downloaded images
+            generatePDF();
+
+            if (Directory.Exists(directory)) await Task.Run(() => Directory.Delete(directory, true));
+        }
+
+        //Download image from source to path and return the size
+        private async Task<long> downloadImageAsync(String source, String path)
+        {
+            using (WebClient client = new WebClient())
+            {
+                await client.DownloadFileTaskAsync(new Uri(source), path);
+            }
+            return new FileInfo(path).Length;
+        }
+
+        private void generatePDF()
+        {
+            Document document = new Document();
+            try
+            {
+                PdfWriter.GetInstance(document, new FileStream(directory + ".pdf", FileMode.Create));
+                document.Open();
+            }
+            catch (IOException)
+            {
+                MessageBox.Show("There is an external software using the current PDF file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            for (int i = 0; i < numberOfImages; i++)
+            {
+
+                iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(directory + "\\" + i + ".jpg");
+                img.SetAbsolutePosition(0, 0);
+                document.SetPageSize(new iTextSharp.text.Rectangle(img.Width, img.Height));
+                document.NewPage();
+                document.Add(img);
+            }
+            document.Close();
         }
 
     }
