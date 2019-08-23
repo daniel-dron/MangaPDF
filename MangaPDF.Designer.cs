@@ -38,6 +38,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pdfNameInput = new System.Windows.Forms.TextBox();
             this.downloadBtn = new System.Windows.Forms.Button();
+            this.changeFolderBtn = new System.Windows.Forms.Button();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.directoryLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // searchMangaLabel
@@ -70,7 +73,7 @@
             // 
             this.mangaListView.Location = new System.Drawing.Point(16, 57);
             this.mangaListView.Name = "mangaListView";
-            this.mangaListView.Size = new System.Drawing.Size(487, 560);
+            this.mangaListView.Size = new System.Drawing.Size(487, 589);
             this.mangaListView.TabIndex = 3;
             this.mangaListView.UseCompatibleStateImageBehavior = false;
             this.mangaListView.SelectedIndexChanged += new System.EventHandler(this.MangaListView_SelectedIndexChangedAsync);
@@ -118,22 +121,44 @@
             this.pdfNameInput.Name = "pdfNameInput";
             this.pdfNameInput.Size = new System.Drawing.Size(279, 20);
             this.pdfNameInput.TabIndex = 14;
+            this.pdfNameInput.TextChanged += new System.EventHandler(this.PdfNameInput_TextChanged);
             // 
             // downloadBtn
             // 
-            this.downloadBtn.Location = new System.Drawing.Point(562, 593);
+            this.downloadBtn.Location = new System.Drawing.Point(562, 623);
             this.downloadBtn.Name = "downloadBtn";
-            this.downloadBtn.Size = new System.Drawing.Size(150, 23);
+            this.downloadBtn.Size = new System.Drawing.Size(110, 23);
             this.downloadBtn.TabIndex = 13;
             this.downloadBtn.Text = "Download Chapters";
             this.downloadBtn.UseVisualStyleBackColor = true;
             this.downloadBtn.Click += new System.EventHandler(this.DownloadBtn_ClickAsync);
             // 
+            // changeFolderBtn
+            // 
+            this.changeFolderBtn.Location = new System.Drawing.Point(562, 594);
+            this.changeFolderBtn.Name = "changeFolderBtn";
+            this.changeFolderBtn.Size = new System.Drawing.Size(110, 23);
+            this.changeFolderBtn.TabIndex = 19;
+            this.changeFolderBtn.Text = "Change Folder";
+            this.changeFolderBtn.UseVisualStyleBackColor = true;
+            this.changeFolderBtn.Click += new System.EventHandler(this.changeFolderBtnClick);
+            // 
+            // directoryLabel
+            // 
+            this.directoryLabel.AutoSize = true;
+            this.directoryLabel.Location = new System.Drawing.Point(678, 599);
+            this.directoryLabel.Name = "directoryLabel";
+            this.directoryLabel.Size = new System.Drawing.Size(35, 13);
+            this.directoryLabel.TabIndex = 20;
+            this.directoryLabel.Text = "label1";
+            // 
             // MangaPDF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(977, 637);
+            this.ClientSize = new System.Drawing.Size(977, 661);
+            this.Controls.Add(this.directoryLabel);
+            this.Controls.Add(this.changeFolderBtn);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.chapterList);
@@ -164,5 +189,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox pdfNameInput;
         private System.Windows.Forms.Button downloadBtn;
+        private System.Windows.Forms.Button changeFolderBtn;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Label directoryLabel;
     }
 }
