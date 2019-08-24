@@ -18,11 +18,10 @@ namespace MangaPDF
             InitializeComponent();
         }
 
-        MangaSearch mangaSearch;
-        List<Manga> mangas;
-        List<string> chapterLinks;
-
-        List<string> imageSources;
+        private MangaSearch mangaSearch;
+        private List<Manga> mangas;
+        private List<string> chapterLinks;
+        private List<string> imageSources;
         private string directory;
         private string imageDirectory;
         private int numberOfImages;
@@ -30,6 +29,7 @@ namespace MangaPDF
 
         private void MangaPDF_Load(object sender, EventArgs e)
         {
+            //Sets not resizable
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
 
@@ -37,13 +37,12 @@ namespace MangaPDF
 
             chapterList.CheckOnClick = true;
 
+            //Set up for Manga List View
             mangaListView.View = View.Details;
             mangaListView.Columns.Add("Manga", 150);
             mangaListView.AutoResizeColumn(0, ColumnHeaderAutoResizeStyle.HeaderSize);
             mangaListView.MultiSelect = false;
             mangaListView.Font = new System.Drawing.Font("Arial", 14, FontStyle.Bold);
-
-            directoryLabel.Text = "Choose a destination for PDF file";
         }
 
         private async void SearchButton_ClickAsync(object sender, EventArgs e)
@@ -62,6 +61,9 @@ namespace MangaPDF
             loadMangas();
         }
 
+        /**
+         * Loads all mangas to manga list view
+         */
         private void loadMangas()
         {
             mangaListView.Items.Clear();
@@ -71,6 +73,7 @@ namespace MangaPDF
                 ImageSize = new Size(90, 130)
             };
 
+            //Get's all images from its source and stores them into an ImageList.
             foreach (Manga manga in mangas)
             {
                 var request = WebRequest.Create(manga.mangaImageSrc);
@@ -82,7 +85,7 @@ namespace MangaPDF
                 }
             }
 
-
+            //Sets mangaListView's images to imgs ImageList
             mangaListView.SmallImageList = imgs;
 
             for(int i = 0; i < mangas.Count; i++)
@@ -91,6 +94,9 @@ namespace MangaPDF
             }
         }
 
+        /**
+         * Connects to the manga selected and displays and stores all chapters available
+         */
         private async void MangaListView_SelectedIndexChangedAsync(object sender, EventArgs e)
         {
             if(mangaListView.SelectedItems.Count > 0)
@@ -112,22 +118,9 @@ namespace MangaPDF
             }
         }
 
-        private void selectAll(object sender, EventArgs e)
-        {
-            for (int i = 0; i < chapterList.Items.Count; i++)
-            {
-                chapterList.SetItemCheckState(i, CheckState.Checked);
-            }
-        }
-
-        private void deselectAll(object sender, MouseEventArgs e)
-        {
-            for (int i = 0; i < chapterList.Items.Count; i++)
-            {
-                chapterList.SetItemCheckState(i, CheckState.Unchecked);
-            }
-        }
-
+        /**
+         * Downloads all chapters selected to a folder designated by the user
+         */
         private async void DownloadBtn_ClickAsync(object sender, EventArgs e)
         {
             if(!directoryChanged)
@@ -138,7 +131,7 @@ namespace MangaPDF
 
             imageSources = new List<string>();
 
-            //Create directory for images
+            //Create directory for the to be downloaded images
             imageDirectory = directory + "\\" + pdfNameInput.Text;
 
             if (Directory.Exists(imageDirectory)) await Task.Run(() => Directory.Delete(imageDirectory, true));
@@ -149,7 +142,9 @@ namespace MangaPDF
             {
                 if (chapterList.GetItemCheckState(i) != CheckState.Checked) continue;
 
-                imageSources = await mangaSearch.getImageSources(chapterLinks[i]);
+                var temp = await mangaSearch.getImageSources(chapterLinks[i]);
+
+                foreach (string s in temp) imageSources.Add(s);
 
                 numberOfImages = i;
             }
@@ -164,7 +159,7 @@ namespace MangaPDF
 
             Directory.CreateDirectory(imageDirectory);
 
-            //index for naming file for ordering
+            //index for naming files in order
             int i = 0;
             foreach (String source in imageSources)
             {
@@ -232,6 +227,22 @@ namespace MangaPDF
         private void PdfNameInput_TextChanged(object sender, EventArgs e)
         {
             if(directoryChanged) directoryLabel.Text = directory + "\\" + (pdfNameInput.Text == "" ? "CHOOSE A NAME" : pdfNameInput.Text + ".pdf");
+        }
+
+        private void selectAll(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chapterList.Items.Count; i++)
+            {
+                chapterList.SetItemCheckState(i, CheckState.Checked);
+            }
+        }
+
+        private void deselectAll(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < chapterList.Items.Count; i++)
+            {
+                chapterList.SetItemCheckState(i, CheckState.Unchecked);
+            }
         }
     }
 }

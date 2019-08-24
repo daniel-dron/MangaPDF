@@ -148,9 +148,9 @@
             this.directoryLabel.AutoSize = true;
             this.directoryLabel.Location = new System.Drawing.Point(678, 599);
             this.directoryLabel.Name = "directoryLabel";
-            this.directoryLabel.Size = new System.Drawing.Size(35, 13);
+            this.directoryLabel.Size = new System.Drawing.Size(161, 13);
             this.directoryLabel.TabIndex = 20;
-            this.directoryLabel.Text = "label1";
+            this.directoryLabel.Text = "Choose a destination for PDF file";
             // 
             // MangaPDF
             // 
