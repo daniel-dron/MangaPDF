@@ -126,6 +126,12 @@ namespace MangaPDF
             if(!directoryChanged)
             {
                 MessageBox.Show("Select a destination", "Directory Empty", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK) directoryChanged = true;
+
+                directory = folderBrowserDialog1.SelectedPath;
+                directoryLabel.Text = directory + "\\" + (pdfNameInput.Text == "" ? "CHOOSE A NAME" : pdfNameInput.Text + ".pdf");
+
                 return;
             }
 
